@@ -9,6 +9,42 @@ defmodule Departures.Feed do
   alias Departures.Feed.Train
 
   @doc """
+  Update train data from departure board feed
+  
+  ## Example
+    Departures.Feed.update("http://developer.mbta.com/lib/gtrtfs/Departures.csv")
+  """
+  def update(url \\ "http://developer.mbta.com/lib/gtrtfs/Departures.csv") do
+    case HTTPoison.get(url) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        store(:csv,body)
+        {:ok, "Departures.Feed.update completed"}
+      {:ok, %HTTPoison.Response{status_code: 404}} ->
+        {:error, "Departures.Feed.update failed: " <> url <> "Not found :("}
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        {:error, "Departures.Feed.update failed: " <> reason}
+    end
+  end
+
+  def store(:csv,data) do
+    String.splitter(data, "\n")
+    |> Enum.filter(fn(x) -> 7 < String.length(x) end)
+    |> CSV.decode!(headers: true)
+    |> Enum.each(fn(x) -> create_train(x) end)
+  end 
+
+@doc """
+  Truncate train data from departure board feed
+  
+  ## Example
+    Departures.Feed.clear()
+  """
+  def clear() do
+    list_trains()
+    |> Enum.each(fn(x) -> delete_train(%Train{id: x.id}) end)
+  end
+
+  @doc """
   Returns the list of trains.
 
   ## Examples
@@ -19,6 +55,9 @@ defmodule Departures.Feed do
   """
   def list_trains do
     Repo.all(Train)
+  end
+  def list_trains(origin) do
+    Enum.filter(list_trains(), fn(x) -> Map.from_struct(x)."Origin" == origin end)
   end
 
   @doc """

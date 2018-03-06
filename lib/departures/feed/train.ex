@@ -5,14 +5,14 @@ defmodule Departures.Feed.Train do
 
 
   schema "trains" do
-    field :destination, :string
-    field :lateness, :integer
-    field :origin, :string
-    field :scheduled, :integer
-    field :status, :string
-    field :track, :integer
-    field :trip, :integer
-    field :ts, :integer
+    field :Destination, :string,   source: :destination
+    field :Lateness, :integer,     source: :lateness
+    field :Origin, :string,        source: :origin
+    field :ScheduledTime, :integer,source: :scheduled
+    field :Status, :string,        source: :status
+    field :Track, :integer,        source: :track
+    field :Trip, :integer,         source: :trip
+    field :TimeStamp, :integer,    source: :ts
 
     timestamps()
   end
@@ -20,7 +20,7 @@ defmodule Departures.Feed.Train do
   @doc false
   def changeset(%Train{} = train, attrs) do
     train
-    |> cast(attrs, [:ts, :origin, :trip, :destination, :scheduled, :lateness, :track, :status])
-    |> validate_required([:ts, :origin, :trip, :destination, :scheduled, :lateness, :track, :status])
+    |> cast(attrs, [:TimeStamp, :Origin, :Trip, :Destination, :ScheduledTime, :Lateness, :Track, :Status])
+    |> validate_required([:TimeStamp, :Origin, :Trip, :Destination, :ScheduledTime, :Lateness, :Status])
   end
 end

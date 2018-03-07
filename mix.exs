@@ -42,6 +42,7 @@ defmodule Departures.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:httpoison, "~> 1.0"},
+      {:calendar, "~> 0.17.2"},
       {:csv, "~> 2.0.0"}
     ]
   end

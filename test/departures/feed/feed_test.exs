@@ -6,9 +6,9 @@ defmodule Departures.FeedTest do
   describe "trains" do
     alias Departures.Feed.Train
 
-    @valid_attrs %{destination: "some destination", lateness: 42, origin: "some origin", scheduled: 42, status: "some status", track: 42, trip: 42, ts: 42}
-    @update_attrs %{destination: "some updated destination", lateness: 43, origin: "some updated origin", scheduled: 43, status: "some updated status", track: 43, trip: 43, ts: 43}
-    @invalid_attrs %{destination: nil, lateness: nil, origin: nil, scheduled: nil, status: nil, track: nil, trip: nil, ts: nil}
+    @valid_attrs %{Destination: "some destination", Lateness: 42, Origin: "some origin", ScheduledTime: 42, Status: "some status", Track: 42, Trip: 42, TimeStamp: 42}
+    @update_attrs %{Destination: "some updated destination", Lateness: 43, Origin: "some updated origin", ScheduledTime: 43, Status: "some updated status", Track: 43, Trip: 43, TimeStamp: 43}
+    @invalid_attrs %{Destination: nil, Lateness: nil, Origin: nil, ScheduledTime: nil, Status: nil, Track: nil, Trip: nil, TimeStamp: nil}
 
     def train_fixture(attrs \\ %{}) do
       {:ok, train} =
@@ -31,14 +31,14 @@ defmodule Departures.FeedTest do
 
     test "create_train/1 with valid data creates a train" do
       assert {:ok, %Train{} = train} = Feed.create_train(@valid_attrs)
-      assert train.destination == "some destination"
-      assert train.lateness == 42
-      assert train.origin == "some origin"
-      assert train.scheduled == 42
-      assert train.status == "some status"
-      assert train.track == 42
-      assert train.trip == 42
-      assert train.ts == 42
+      assert train."Destination" == "some destination"
+      assert train."Lateness" == 42
+      assert train."Origin" == "some origin"
+      assert train."ScheduledTime" == 42
+      assert train."Status" == "some status"
+      assert train."Track" == 42
+      assert train."Trip" == 42
+      assert train."TimeStamp" == 42
     end
 
     test "create_train/1 with invalid data returns error changeset" do
@@ -49,14 +49,14 @@ defmodule Departures.FeedTest do
       train = train_fixture()
       assert {:ok, train} = Feed.update_train(train, @update_attrs)
       assert %Train{} = train
-      assert train.destination == "some updated destination"
-      assert train.lateness == 43
-      assert train.origin == "some updated origin"
-      assert train.scheduled == 43
-      assert train.status == "some updated status"
-      assert train.track == 43
-      assert train.trip == 43
-      assert train.ts == 43
+      assert train."Destination" == "some updated destination"
+      assert train."Lateness" == 43
+      assert train."Origin" == "some updated origin"
+      assert train."ScheduledTime" == 43
+      assert train."Status" == "some updated status"
+      assert train."Track" == 43
+      assert train."Trip" == 43
+      assert train."TimeStamp" == 43
     end
 
     test "update_train/2 with invalid data returns error changeset" do

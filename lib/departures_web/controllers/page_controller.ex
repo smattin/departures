@@ -24,7 +24,7 @@ defmodule DeparturesWeb.PageController do
 
     now = Calendar.DateTime.now! boston
 
-    render(conn, "index.html", now: now, departures: departures)
+    render(conn, "index.html", now: now, departures: Enum.take(departures,9))
   end
 
   def dayname(dt) do

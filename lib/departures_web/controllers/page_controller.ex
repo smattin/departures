@@ -1,11 +1,9 @@
 defmodule DeparturesWeb.PageController do
   use DeparturesWeb, :controller
-  import Ecto.Query, only: [from: 2]
-  import Departures.Feed
   alias Departures.Feed
 
   def index(conn, _params) do
-
+    # TODO parameterize origin station
 
     origin = "North Station"    
     trains = Feed.list_trains(origin)
@@ -21,20 +19,9 @@ defmodule DeparturesWeb.PageController do
     ]
     end)
 
-    # FIXME cast to local time
-    # now = elem(Elixir.DateTime.from_iso8601("2011-12-11 18:28:00-05:00"),1)
-    # now = Elixir.DateTime.utc_now()
     now = Calendar.DateTime.now! boston
 
-"""
-    # for sample
-    query = from d in Departures.Departure, 
-      select: [d.carrier,fragment("to_char(?, 'HH:MI')",d.departs),d.destination,d.train,fragment("COALESCE(to_char(?,'99'),'TBD')",d.track),d.status],
-      where: d.departs >= ^now,
-      limit: 9
-      departures = Departures.Repo.all(query) 
-"""
-      render(conn, "index.html", now: now, departures: departures)
+    render(conn, "index.html", now: now, departures: departures)
   end
 
   def dayname(dt) do
@@ -50,11 +37,12 @@ defmodule DeparturesWeb.PageController do
 
   def time_hm(dt) do
       {hh,mm,_ss} = Time.to_erl(DateTime.to_time(dt))
-      meridian = "AM"
-      if hh > 12 do
-        hh = hh - 12
-        meridian = "PM"
-      end
+      {hh,meridian} = 
+        if hh > 12 do
+          {hh - 12, "PM"}
+        else
+          {hh, "AM"}
+        end
       List.to_string(:io_lib.format('~2.. w:~2..0w', [hh,mm])) <> " " <> meridian
   end
 end

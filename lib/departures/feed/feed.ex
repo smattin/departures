@@ -28,7 +28,7 @@ defmodule Departures.Feed do
 
   def store(:csv,data) do
     String.splitter(data, "\n")
-    |> Enum.filter(fn(x) -> 7 < String.length(x) end)
+    |> Enum.filter(fn(x) -> 7 < String.length(x) end) # ignore blank/short lines
     |> CSV.decode!(headers: true)
     |> Enum.each(fn(x) -> create_train(x) end)
   end 

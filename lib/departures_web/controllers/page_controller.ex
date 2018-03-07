@@ -11,7 +11,7 @@ defmodule DeparturesWeb.PageController do
     Feed.update() 
     trains = Feed.list_trains(origin)
     boston = "America/New_York" # :(
-    # "Carrier","Time","Destination","Train#","Track#","Status"]
+    # "Carrier","Time","Destination","Train#","Track#","Status"
     departures = Enum.map(trains,fn(x) -> [
         "MBTA",
         time_hm(DateTime.from_unix!(x."ScheduledTime") |> Calendar.DateTime.shift_zone!(boston)),

@@ -54,7 +54,9 @@ defmodule Departures.Feed do
 
   """
   def list_trains do
-    Repo.all(Train)
+    Train
+    |> order_by([train], asc: train.scheduled)
+    |> Repo.all
   end
   def list_trains(origin) do
     Enum.filter(list_trains(), fn(x) -> Map.from_struct(x)."Origin" == origin end)

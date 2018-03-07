@@ -3,8 +3,9 @@ defmodule DeparturesWeb.PageController do
   alias Departures.Feed
 
   def index(conn, _params) do
-    # TODO parameterize origin station
+    # TODO parameterize origin station and board_rows
 
+    board_rows = 9
     origin = "North Station"
     # TODO: check the dates of the trains ScheduledTime, which might not be today
     Feed.clear()
@@ -24,7 +25,7 @@ defmodule DeparturesWeb.PageController do
 
     now = Calendar.DateTime.now! boston
 
-    render(conn, "index.html", now: now, departures: Enum.take(departures,9))
+    render(conn, "index.html", now: now, departures: Enum.take(departures,board_rows))
   end
 
   def dayname(dt) do

@@ -5,7 +5,10 @@ defmodule DeparturesWeb.PageController do
   def index(conn, _params) do
     # TODO parameterize origin station
 
-    origin = "North Station"    
+    origin = "North Station"
+    # TODO: check the dates of the trains ScheduledTime, which might not be today
+    Feed.clear()
+    Feed.update() 
     trains = Feed.list_trains(origin)
     boston = "America/New_York" # :(
     # "Carrier","Time","Destination","Train#","Track#","Status"]

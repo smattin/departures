@@ -3,12 +3,12 @@
   <tr style="color:yellow;">
     <td style="align: left"><%= DeparturesWeb.PageController.dayname(@now) %></td>
     <td/><td style="color:lightGray"><%= gettext "%{station} Information", station: "North Station" %></td><td/>
-    <td colspan="2" style="align: right">Current Time</td>
+    <td colspan="2" style="text-align: right">Current Time</td>
   </tr>
     <tr style="color:yellow;">
     <td style="align: left"><%= DeparturesWeb.PageController.date_mdy(@now) %></td>
     <td/><td/><td/>
-    <td colspan="2" style="align: right"><%= DeparturesWeb.PageController.time_hm(@now) %></td>
+    <td colspan="2" style="text-align: right"><%= DeparturesWeb.PageController.time_hm(@now) %></td>
   </tr>
 
       <%= for col <- ["Carrier","Time","Destination","Train#","Track#","Status"] do %>
@@ -18,7 +18,7 @@
   <%= for row <- @departures do %>
     <tr>
       <%= for field <- row do %>
-        <td style="color:yellow; padding-left:1em"><%= field %></td>
+        <td style="color:yellow; padding-left:1em; text-align:left"><%= field %></td>
       <% end %>
     </tr>
   <% end %>
